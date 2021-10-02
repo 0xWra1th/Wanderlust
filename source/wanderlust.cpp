@@ -100,7 +100,7 @@ int main()
     
     // ---------- GENERATE MAP -----------
     // COUNT
-    fstream mapFile("../map_01.txt");
+    fstream mapFile("../maps/village/map_01.txt");
     std::string token;
     int numTiles = 0;
     while (getline (mapFile, token, ' ')) {
@@ -111,19 +111,23 @@ int main()
     mapFile.close();
 
     // Create Tiles
+    int startRow = 0;
+    int startCol = 0;
     int rows = sqrt(numTiles); // MAP WILL ALWAYS BE A SQUARE
     int cols = sqrt(numTiles);
+    int tileOffsetX = ( cols * 24 ) * startCol;
+    int tileOffsetY = ( rows * 24 ) * startRow;
     sf::RectangleShape Tiles[numTiles];
     int tileCounter = 0;
     int r = 0;
     int c = 0;
 
-    mapFile.open("../map_01.txt");
+    mapFile.open("../maps/village/map_01.txt");
     while (getline (mapFile, token, ' ')) {
         if(token != "\n"){
             Tiles[tileCounter].setSize(sf::Vector2f( 48.f, 48.f ));
             Tiles[tileCounter].setOrigin(sf::Vector2f( 0.f, 0.f ));
-            Tiles[tileCounter].setPosition(sf::Vector2f(( c * 48.f ), ( r * 48.f )));
+            Tiles[tileCounter].setPosition(sf::Vector2f(( c * 48.f )-tileOffsetX, ( r * 48.f )-tileOffsetY));
             int randNum = (rand() % 2 ) + 1;
             if(token == "G"){  
                 if(randNum == 1){
@@ -240,6 +244,30 @@ int main()
                         player.setPosition(sf::Vector2f(player.position.x, Tiles[i].getPosition().y + 29.f));
                     }
                 }
+            }
+        }
+        // -----------------------------------
+
+        // ----------- MOVE SCENES -----------
+        if( player.position.x > window.getSize().x){
+            player.position.x -= window.getSize().x;
+            for(int i=0;i<numTiles;i++){
+                Tiles[i].setPosition(Tiles[i].getPosition().x - window.getSize().x, Tiles[i].getPosition().y);
+            }
+        }else if( player.position.x < 0){
+            player.position.x += window.getSize().x;
+            for(int i=0;i<numTiles;i++){
+                Tiles[i].setPosition(Tiles[i].getPosition().x + window.getSize().x, Tiles[i].getPosition().y);
+            }
+        }else if( player.position.y > window.getSize().y){
+            player.position.y -= window.getSize().y;
+            for(int i=0;i<numTiles;i++){
+                Tiles[i].setPosition(Tiles[i].getPosition().x, Tiles[i].getPosition().y - window.getSize().y);
+            }
+        }else if( player.position.y < 0){
+            player.position.y += window.getSize().y;
+            for(int i=0;i<numTiles;i++){
+                Tiles[i].setPosition(Tiles[i].getPosition().x, Tiles[i].getPosition().y + window.getSize().y);
             }
         }
         // -----------------------------------
