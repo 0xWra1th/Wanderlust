@@ -32,8 +32,8 @@ int main()
     // -----------------------------------
 
     // ----------- TEXTURES --------------
-    std::string spritesheet = "../assets/Kenny/Spritesheet/roguelikeSheet_transparent.png";
-    std::string character = "../assets/Hero.png";
+    std::string spritesheet = "assets/Kenny/Spritesheet/roguelikeSheet_transparent.png";
+    std::string character = "assets/Hero.png";
 
     sf::Texture playerUp;
     playerUp.loadFromFile(character, sf::IntRect(sf::Vector2i(0 * 16, 0 * 16), sf::Vector2i(16, 16)));
@@ -100,7 +100,7 @@ int main()
     
     // ---------- GENERATE MAP -----------
     // COUNT
-    fstream mapFile("../maps/village/map_01.txt");
+    fstream mapFile("maps/village/map_01.txt");
     std::string token;
     int numTiles = 0;
     while (getline (mapFile, token, ' ')) {
@@ -108,21 +108,24 @@ int main()
             numTiles+=1;
         }
     }
+    const int numTilesConst = numTiles;
     mapFile.close();
 
     // Create Tiles
     int startRow = 0;
     int startCol = 0;
-    int rows = sqrt(numTiles); // MAP WILL ALWAYS BE A SQUARE
-    int cols = sqrt(numTiles);
+    int rows = sqrt(numTilesConst); // MAP WILL ALWAYS BE A SQUARE
+    int cols = sqrt(numTilesConst);
     int tileOffsetX = ( cols * 24 ) * startCol;
     int tileOffsetY = ( rows * 24 ) * startRow;
-    sf::RectangleShape Tiles[numTiles];
+    
+    sf::RectangleShape* Tiles = new sf::RectangleShape[numTilesConst];
+
     int tileCounter = 0;
     int r = 0;
     int c = 0;
 
-    mapFile.open("../maps/village/map_01.txt");
+    mapFile.open("maps/village/map_01.txt");
     while (getline (mapFile, token, ' ')) {
         if(token != "\n"){
             Tiles[tileCounter].setSize(sf::Vector2f( 48.f, 48.f ));
@@ -184,7 +187,7 @@ int main()
     }
 
     sf::Shader shader;
-    if (!shader.loadFromFile("../shaders/vertex-shader.glsl", "../shaders/fragment-shader.glsl"))
+    if (!shader.loadFromFile("shaders/vertex-shader.glsl", "shaders/fragment-shader.glsl"))
     {
         LOG("ERR: Failed to load shaders!");
     }
@@ -282,6 +285,10 @@ int main()
         window.draw(player.rect, &shader);
         
         window.display();
+        // -----------------------------------
+
+        // ----------- FREE MEMORY -----------
+        
         // -----------------------------------
     }
     // -----------------------------------
