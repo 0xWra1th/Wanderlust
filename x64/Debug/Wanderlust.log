@@ -1,0 +1,5 @@
+﻿  Player.cpp
+F:\Repos\Wanderlust\source\Player.cpp(2,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  wanderlust.cpp
+F:\Repos\Wanderlust\source\wanderlust.cpp(3,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Generating Code...

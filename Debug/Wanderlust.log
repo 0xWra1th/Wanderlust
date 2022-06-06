@@ -1,0 +1,4 @@
+﻿  wanderlust.cpp
+F:\Repos\Wanderlust\source\wanderlust.cpp(146,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Repos\Wanderlust\source\wanderlust.cpp(147,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Wanderlust.vcxproj -> F:\Repos\Wanderlust\Debug\Wanderlust.exe

@@ -1,0 +1,11 @@
+F:\Repos\Wanderlust\Debug\Wanderlust.vcxproj.CopyComplete
+F:\Repos\Wanderlust\Debug\Wanderlust.exe
+F:\Repos\Wanderlust\Debug\sfml-graphics-d-2.dll
+F:\Repos\Wanderlust\Debug\sfml-window-d-2.dll
+F:\Repos\Wanderlust\Debug\sfml-system-d-2.dll
+F:\Repos\Wanderlust\Debug\freetyped.dll
+F:\Repos\Wanderlust\Debug\zlibd1.dll
+F:\Repos\Wanderlust\Debug\bz2d.dll
+F:\Repos\Wanderlust\Debug\libpng16d.dll
+F:\Repos\Wanderlust\Debug\brotlidec.dll
+F:\Repos\Wanderlust\Debug\brotlicommon.dll
