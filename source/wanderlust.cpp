@@ -15,9 +15,10 @@
 
 // Global variables
 const int unwalkableSize = 8;
+const int buildingSize = 2;
 
 // Helper functions
-bool isUnwalkable(const sf::Texture* texture, sf::Texture** list) {
+bool inArray(const sf::Texture* texture, sf::Texture** list) {
     for (int i = 0; i < unwalkableSize; i++) {
         if (texture == list[i]) {
             return true;
@@ -44,6 +45,7 @@ int main()
     sf::Vector2f center = sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f);
     int tick = 0;
     sf::Texture** unwalkable = new sf::Texture * [unwalkableSize];
+    sf::Texture** building = new sf::Texture * [buildingSize];
     int sceneX = 0;
     int sceneY = 0;
     
@@ -102,10 +104,12 @@ int main()
     sf::Texture tentTile3;
     tentTile3.loadFromFile(spritesheet, sf::IntRect(sf::Vector2i((46 * 16) + 46 , (11 * 16) + 11), sf::Vector2i(16, 16)));
     unwalkable[4] = &tentTile3;
+    building[0] = &tentTile3;
 
     sf::Texture tentTile4;
     tentTile4.loadFromFile(spritesheet, sf::IntRect(sf::Vector2i((47 * 16) + 47 , (11 * 16) + 11), sf::Vector2i(16, 16)));
     unwalkable[5] = &tentTile4;
+    building[1] = &tentTile4;
 
     sf::Texture campfireTile1;
     campfireTile1.loadFromFile(spritesheet, sf::IntRect(sf::Vector2i((15 * 16) + 15 , (8 * 16) + 8), sf::Vector2i(16, 16)));
@@ -149,6 +153,7 @@ int main()
     int tileOffsetY = ( rows * 24 ) * startRow;
     
     sf::RectangleShape* Tiles = new sf::RectangleShape[numTilesConst];
+    sf::RectangleShape* BuildingTiles = new sf::RectangleShape[numTilesConst];
 
     int tileCounter = 0;
     int r = 0;
@@ -213,7 +218,6 @@ int main()
                     Tiles[tileCounter].setTexture(&campfireTile2);
                 }
             }
-
             tileCounter = tileCounter + 1;
             c = c + 1;
         }
@@ -282,10 +286,18 @@ int main()
             player.setTexture(&playerRight);
         }
         // -----------------------------------
-
+        
+        // ------------ ENTER TENT -----------
+       /* for (int i = 0; i < numTiles; i++) {
+            if (inArray(Tiles[i].getTexture(), building)) {
+                BuildingTiles[i] = Tiles[i];
+            }
+        }*/
+        // -----------------------------------
+        
         // ------------ COLLISONS ------------
         for(int i=0;i<numTiles;i++){
-            if(isUnwalkable(Tiles[i].getTexture(), unwalkable)){
+            if(inArray(Tiles[i].getTexture(), unwalkable)){
                 if(player.feetCollider.getGlobalBounds().intersects(Tiles[i].getGlobalBounds())){
                     if(player.position.x < Tiles[i].getPosition().x){
                         player.setPosition(sf::Vector2f(Tiles[i].getPosition().x - 12.f, player.position.y));
@@ -358,12 +370,15 @@ int main()
         }
 
         window.draw(player.rect, &shader);
+
+        /*for (int i = 0; i < numTiles; i++) {
+            window.draw(BuildingTiles[i], &shader);
+        }*/
         
         window.display();
         // -----------------------------------
 
         // ----------- FREE MEMORY -----------
-        
         // -----------------------------------
     }
     // -----------------------------------
